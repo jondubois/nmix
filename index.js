@@ -34,7 +34,7 @@ var nMix = function(mainClass) {
 		
 		this.applyMixinMethod = function(MixinClass, method, args) {
 			if(args && !(args instanceof Array)) {
-				throw 'Exception: The args parameter of the callMixinMethod function must be an Array';
+				throw 'Exception: The args parameter of the applyMixinMethod function must be an Array';
 			}
 			return this.__internalMixinMethods[MixinClass][method].apply(this, args);
 		}
