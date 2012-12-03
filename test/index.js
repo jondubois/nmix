@@ -1,17 +1,3 @@
-nmix
-====
-
-A simple mixin module which facilitates multiple inheritance in JavaScript.
-
-## Installation
-
-```bash
-npm install nmix
-```
-
-## Example Usage
-
-```js
 var nmix = require('../');
 
 var Apple = function(adjective) {
@@ -54,12 +40,11 @@ var ImprovedFruitSalad = nmix(function() {
 });
 
 var fruitSalad = new FruitSalad('green');
-console.log(fruitSalad.splat()); // outputs 'SPLAT!'
-console.log(fruitSalad.crunch()); // 'CRUNCH CRUNCH CRUNCH!'
-console.log(fruitSalad.info()); // 'A fruit salad containing a green apple and a big banana'
+console.log(fruitSalad.splat());
+console.log(fruitSalad.crunch());
+console.log(fruitSalad.info());
 
 console.log();
 
 var improvedFruitSalad = new ImprovedFruitSalad();
-console.log(improvedFruitSalad.info()); // 'A fruit salad containing a red apple and a big banana - An improved version'
-```
+console.log(improvedFruitSalad.info());
