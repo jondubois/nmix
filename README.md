@@ -12,7 +12,7 @@ npm install nmix
 ## Example Usage
 
 ```js
-var nmix = require('../');
+var nmix = require('nmix');
 
 var Apple = function(adjective) {
 	this.info = function() {
