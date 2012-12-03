@@ -1,4 +1,4 @@
-var nMix = function(mainClass) {
+var nmix = function(mainClass) {
 	var mixinHolder = function() {
 		this.__internalMixinMethods = {};
 		
@@ -49,5 +49,5 @@ var nMix = function(mainClass) {
 }
 
 if(typeof module != 'undefined') {
-	module.exports = nMix;
+	module.exports = nmix;
 }
