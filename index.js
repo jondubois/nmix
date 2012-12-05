@@ -1,4 +1,4 @@
-var nmix = function(mainClass) {
+var nmix = function(MainClass) {
 	var mixinHolder = function() {
 		this.__internalMixinMethods = {};
 		
@@ -11,14 +11,14 @@ var nmix = function(mainClass) {
 				MixinClass.apply(this);
 			}
 			
-			var mixedInInstance = {};
-			this.__internalMixinMethods[MixinClass] = mixedInInstance;
+			var mixinInstance = {};
+			this.__internalMixinMethods[MixinClass] = mixinInstance;
 			
 			var value, index;
 			for(index in this) {
 				value = this[index];
 				if(value instanceof Function) {
-					mixedInInstance[index] = value;
+					mixinInstance[index] = value;
 				}
 			}
 		}
@@ -43,9 +43,9 @@ var nmix = function(mainClass) {
 			return this instanceof classReference || this.__internalMixinMethods.hasOwnProperty(classReference);
 		}
 	}
-	mixinHolder.apply(mainClass.prototype);
+	mixinHolder.apply(MainClass.prototype);
 	
-	return mainClass;
+	return MainClass;
 }
 
 if(typeof module != 'undefined') {
