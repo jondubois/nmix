@@ -1,49 +1,52 @@
+/*
+	A function to facilitate multiple inheritance in JavaScript.
+	Author: JF Gros-Dubois
+*/
+
 var nmix = function(MainClass) {
-	var mixinHolder = function() {
-		this.__internalMixinMethods = {};
+	var proto = MainClass.prototype;
+	proto.__internalMixinMethods = {};
+	
+	proto.initMixin = function(MixinClass) {
+		var args = Array.prototype.slice.call(arguments, 1);
 		
-		this.initMixin = function(MixinClass) {
-			var args = Array.prototype.slice.call(arguments, 1);
-			
-			if(args) {
-				MixinClass.apply(this, args);
-			} else {
-				MixinClass.apply(this);
-			}
-			
-			var mixinInstance = {};
-			this.__internalMixinMethods[MixinClass] = mixinInstance;
-			
-			var value, index;
-			for(index in this) {
-				value = this[index];
-				if(value instanceof Function) {
-					mixinInstance[index] = value;
-				}
-			}
+		if(args) {
+			MixinClass.apply(this, args);
+		} else {
+			MixinClass.apply(this);
 		}
 		
-		this.callMixinMethod = function(MixinClass, method) {
-			var args = Array.prototype.slice.call(arguments, 2);
-			if(args) {
-				return this.__internalMixinMethods[MixinClass][method].apply(this, args);
-			} else {
-				return this.__internalMixinMethods[MixinClass][method].apply(this);
-			}
-		}
+		var mixinInstance = {};
+		proto.__internalMixinMethods[MixinClass] = mixinInstance;
 		
-		this.applyMixinMethod = function(MixinClass, method, args) {
-			if(args && !(args instanceof Array)) {
-				throw 'Exception: The args parameter of the applyMixinMethod function must be an Array';
+		var i, value;
+		for(i in this) {
+			value = this[i];
+			if(value instanceof Function) {
+				mixinInstance[i] = value;
 			}
-			return this.__internalMixinMethods[MixinClass][method].apply(this, args);
-		}
-		
-		this.instanceOf = function(classReference) {
-			return this instanceof classReference || this.__internalMixinMethods.hasOwnProperty(classReference);
 		}
 	}
-	mixinHolder.apply(MainClass.prototype);
+	
+	proto.callMixinMethod = function(MixinClass, method) {
+		var args = Array.prototype.slice.call(arguments, 2);
+		if(args) {
+			return proto.__internalMixinMethods[MixinClass][method].apply(this, args);
+		} else {
+			return proto.__internalMixinMethods[MixinClass][method].apply(this);
+		}
+	}
+	
+	proto.applyMixinMethod = function(MixinClass, method, args) {
+		if(args && !(args instanceof Array)) {
+			throw 'Exception: The args parameter of the applyMixinMethod function must be an Array';
+		}
+		return proto.__internalMixinMethods[MixinClass][method].apply(this, args);
+	}
+	
+	proto.instanceOf = function(classReference) {
+		return this instanceof classReference || proto.__internalMixinMethods.hasOwnProperty(classReference);
+	}
 	
 	return MainClass;
 }
